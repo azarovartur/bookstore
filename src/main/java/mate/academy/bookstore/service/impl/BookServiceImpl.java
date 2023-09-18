@@ -1,14 +1,14 @@
 package mate.academy.bookstore.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import mate.academy.bookstore.dto.BookDto;
-import mate.academy.bookstore.dto.BookSearchParameters;
 import mate.academy.bookstore.dto.CreateBookRequestDto;
 import mate.academy.bookstore.exception.EntityNotFoundException;
 import mate.academy.bookstore.mapper.BookMapper;
 import mate.academy.bookstore.model.Book;
-import mate.academy.bookstore.repository.BookRepository;
-import mate.academy.bookstore.repository.BookSpecificationBuilder;
+import mate.academy.bookstore.repository.SpecificationBuilder;
+import mate.academy.bookstore.repository.book.BookRepository;
 import mate.academy.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,15 +18,15 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
-    private final BookSpecificationBuilder bookSpecificationBuilder;
+    private final SpecificationBuilder<Book> specificationBuilder;
 
     @Autowired
     public BookServiceImpl(BookRepository bookRepository,
                            BookMapper bookMapper,
-                           BookSpecificationBuilder bookSpecificationBuilder) {
+                           SpecificationBuilder<Book> specificationBuilder) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
-        this.bookSpecificationBuilder = bookSpecificationBuilder;
+        this.specificationBuilder = specificationBuilder;
     }
 
     @Override
@@ -71,8 +71,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> search(BookSearchParameters searchParameters) {
-        Specification<Book> bookSpecification = bookSpecificationBuilder.build(searchParameters);
+    public List<BookDto> search(Map<String,String> searchParameters) {
+        Specification<Book> bookSpecification = specificationBuilder.build(searchParameters);
         return bookRepository.findAll(bookSpecification)
                 .stream()
                 .map(bookMapper::toDto)

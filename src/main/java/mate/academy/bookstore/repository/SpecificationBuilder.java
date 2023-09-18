@@ -1,8 +1,8 @@
 package mate.academy.bookstore.repository;
 
-import mate.academy.bookstore.dto.BookSearchParameters;
+import java.util.Map;
 import org.springframework.data.jpa.domain.Specification;
 
 public interface SpecificationBuilder<T> {
-    Specification<T> build(BookSearchParameters bookSearchParameters);
+    Specification<T> build(Map<String,String> searchParameters);
 }

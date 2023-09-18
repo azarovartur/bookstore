@@ -1,8 +1,8 @@
 package mate.academy.bookstore.controller;
 
 import java.util.List;
+import java.util.Map;
 import mate.academy.bookstore.dto.BookDto;
-import mate.academy.bookstore.dto.BookSearchParameters;
 import mate.academy.bookstore.dto.CreateBookRequestDto;
 import mate.academy.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,7 +56,11 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    List<BookDto> searchBooks(BookSearchParameters searchParameters) {
+    List<BookDto> searchBooks(@RequestParam Map<String,String> searchParameters) {
+        for (Map.Entry<String, String> stringStringEntry : searchParameters.entrySet()) {
+            System.out.println(stringStringEntry.getKey());
+            System.out.println(stringStringEntry.getValue());
+        }
         return bookService.search(searchParameters);
     }
 }

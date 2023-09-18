@@ -1,13 +1,15 @@
-package mate.academy.bookstore.repository;
+package mate.academy.bookstore.repository.book;
 
 import java.util.List;
 import mate.academy.bookstore.model.Book;
+import mate.academy.bookstore.repository.SpecificationProvider;
+import mate.academy.bookstore.repository.SpecificationProviderManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BookSpecificationProviderManager implements SpecificationProviderManager<Book> {
-    private List<SpecificationProvider<Book>> bookSpecificationProviders;
+    private final List<SpecificationProvider<Book>> bookSpecificationProviders;
 
     @Autowired
     public BookSpecificationProviderManager(List<SpecificationProvider<Book>>

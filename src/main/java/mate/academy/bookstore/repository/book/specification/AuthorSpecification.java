@@ -1,4 +1,4 @@
-package mate.academy.bookstore.repository.book;
+package mate.academy.bookstore.repository.book.specification;
 
 import java.util.Arrays;
 import mate.academy.bookstore.model.Book;
@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorSpecification implements SpecificationProvider<Book> {
+    private static final String SEARCH_KEY = "author";
+
     @Override
     public String getKey() {
-        return "author";
+        return SEARCH_KEY;
     }
 
     public Specification<Book> getSpecification(String[] params) {
