@@ -1,5 +1,6 @@
 package mate.academy.bookstore.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import mate.academy.bookstore.dto.BookDto;
@@ -29,7 +30,7 @@ public class BookController {
     }
 
     @PostMapping()
-    BookDto createBook(@RequestBody CreateBookRequestDto requestDto) {
+    BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
     }
 
@@ -57,10 +58,6 @@ public class BookController {
 
     @GetMapping("/search")
     List<BookDto> searchBooks(@RequestParam Map<String,String> searchParameters) {
-        for (Map.Entry<String, String> stringStringEntry : searchParameters.entrySet()) {
-            System.out.println(stringStringEntry.getKey());
-            System.out.println(stringStringEntry.getValue());
-        }
         return bookService.search(searchParameters);
     }
 }
